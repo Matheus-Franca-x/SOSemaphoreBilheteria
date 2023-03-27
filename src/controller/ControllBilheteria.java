@@ -4,8 +4,8 @@ import java.util.concurrent.Semaphore;
 
 public class ControllBilheteria extends Thread
 {
-	static int bilhete = 100;
-	int id;
+	private static int bilhete = 100;
+	private int id;
 	Semaphore tempo;
 	
 	public ControllBilheteria(int id, Semaphore tempo) 
@@ -14,7 +14,7 @@ public class ControllBilheteria extends Thread
 		this.tempo = tempo;
 		}
 	
-	public void compraBilhete()
+	public void areaUsuario()
 	{
 		new Thread()
 		{
@@ -25,16 +25,50 @@ public class ControllBilheteria extends Thread
 				{
 					if(buy())
 					{
-						
+						if(validarBilhete())
+						{
+							try {
+								tempo.acquire();
+								compraBilhete();
+								sleep(500);
+							} catch (InterruptedException e) {
+								e.printStackTrace();
+							} finally {
+								tempo.release();
+							}
+						}
 					}
 				}
-				
-				
 			}
 		}.start();
 	}
 	
-	public boolean buy() 
+	private void compraBilhete()
+	{
+		int compraB = (int) (Math.random() * 4) + 1;
+		
+		if(compraB > bilhete)
+		{
+			System.out.println("Usuario " + this.id + " nao foi possivel fazer a compra por falta de bilhete.");
+		}
+		else
+		{
+			bilhete -= compraB;
+			System.out.println("Usuario " + this.id + " comprou " + compraB + " bilhetes.");
+		}
+		
+	}
+	
+	private boolean validarBilhete()
+	{
+		if (bilhete > 0)
+		{
+			return true;
+		}
+		return false;
+	}
+	
+	private boolean buy() 
 	{
 		int tempo = (int) (Math.random() * 2001) + 1000;
 		try {
@@ -46,6 +80,7 @@ public class ControllBilheteria extends Thread
 		
 		if(tempo < 2500)
 		{
+			System.out.println("Usuario " + this.id + " pode efetuar a compra.");
 			return true;
 		}
 		System.out.println("Usuario " + this.id + " nao foi possivel efetuar a compra.");
@@ -53,7 +88,7 @@ public class ControllBilheteria extends Thread
 		
 	}
 	
-	public boolean login()
+	private boolean login()
 	{
 		int tempo = (int)(Math.random() * 1951 ) + 50;
 		try {

@@ -13,7 +13,7 @@ public class Main {
 		for(int i = 1; i <= 300; i++)
 		{
 			ControllBilheteria control = new ControllBilheteria(i, perm);
-			control.compraBilhete();
+			control.areaUsuario();
 		}
 	}
 }
