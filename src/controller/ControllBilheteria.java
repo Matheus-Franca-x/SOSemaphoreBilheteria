@@ -20,34 +20,56 @@ public class ControllBilheteria extends Thread
 		{
 			public void run()
 			{
-				int tempo = (int)(Math.random() * 1501 ) + 500;
-				try {
-					sleep(tempo);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
-				}
-				if (tempo <= 1000)
+				
+				if(login())
 				{
-					login();
-					buy();
+					if(buy())
+					{
+						
+					}
 				}
-				else
-				{
-					System.out.println("Time Out");
-				}
+				
+				
 			}
 		}.start();
 	}
 	
-	public void buy() 
+	public boolean buy() 
 	{
+		int tempo = (int) (Math.random() * 2001) + 1000;
+		try {
+			sleep(tempo);
+		} catch (InterruptedException e) 
+		{
+			e.printStackTrace();
+		}
+		
+		if(tempo < 2500)
+		{
+			return true;
+		}
+		System.out.println("Usuario " + this.id + " nao foi possivel efetuar a compra.");
+		return false;
 		
 	}
 	
-	public void login()
+	public boolean login()
 	{
-		System.out.println(this.id + " Entrou");
+		int tempo = (int)(Math.random() * 1951 ) + 50;
+		try {
+			sleep(tempo);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		
+		if (tempo < 1000)
+		{
+			System.out.println("Usuario " + this.id + " Entrou no sistema.");
+			return true;
+		}
+		System.out.println("Usuario " + this.id + " deu Time Out.");
+		return false;
+
 	}
 	
 }
