@@ -30,7 +30,7 @@ public class ControllBilheteria extends Thread
 							try {
 								tempo.acquire();
 								compraBilhete();
-								sleep(500);
+								sleep(400);
 							} catch (InterruptedException e) {
 								e.printStackTrace();
 							} finally {
@@ -56,7 +56,6 @@ public class ControllBilheteria extends Thread
 			bilhete -= compraB;
 			System.out.println("Usuario " + this.id + " comprou " + compraB + " bilhetes.");
 		}
-		
 	}
 	
 	private boolean validarBilhete()
@@ -90,7 +89,7 @@ public class ControllBilheteria extends Thread
 	
 	private boolean login()
 	{
-		int tempo = (int)(Math.random() * 1951 ) + 50;
+		int tempo = (int)(Math.random() * 1951) + 50;
 		try {
 			sleep(tempo);
 		} catch (InterruptedException e) {
